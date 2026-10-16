@@ -1,0 +1,1 @@
+import ArduinoPanel from './ArduinoPanel';import type {PluginComponentProps} from '../types';export default function FirmwareUpload(props:PluginComponentProps){return <ArduinoPanel {...props} mode="firmware-upload"/>;}

@@ -1,0 +1,1 @@
+import ArduinoPanel from './ArduinoPanel';import type {PluginComponentProps} from '../types';export default function SerialMonitor(props:PluginComponentProps){return <ArduinoPanel {...props} mode="serial-monitor"/>;}

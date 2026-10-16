@@ -1,0 +1,1 @@
+import RosPanel from './RosPanel';import type {PluginComponentProps} from '../types';export default function CommandCenter(props:PluginComponentProps){return <RosPanel {...props} mode="command-center"/>;}

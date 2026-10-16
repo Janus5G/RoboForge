@@ -1,0 +1,1 @@
+import MqttPanel from './MqttPanel';import type {PluginComponentProps} from '../types';export default function BrokerExplorer(props:PluginComponentProps){return <MqttPanel {...props} mode="broker-explorer"/>;}

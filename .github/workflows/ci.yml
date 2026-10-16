@@ -1,0 +1,45 @@
+name: RoboForge CI
+on:
+  push:
+  pull_request:
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Verify repository root layout
+        run: |
+          test -f package.json
+          test -f backend/mcp/gateway.js
+          test -f frontend/src/App.tsx
+          test ! -e RoboForge/package.json
+      - name: Install frontend dependencies
+        run: npm --prefix frontend install --no-audit --no-fund
+      - name: Verify public site and screenshots
+        run: npm run docs:check
+      - name: Typecheck and bundle frontend
+        run: npm --prefix frontend run build
+      - name: Backend regression tests
+        run: npm --prefix backend test
+      - name: Build offline Debian package from compiled frontend
+        run: bash scripts/build-deb.sh
+      - name: Inspect Debian package
+        run: |
+          dpkg-deb --info dist-packages/roboforge-studio_*.deb
+          dpkg-deb --contents dist-packages/roboforge-studio_*.deb | grep /usr/bin/roboforge-server
+          mkdir -p /tmp/roboforge-deb-extract
+          dpkg-deb --extract dist-packages/roboforge-studio_*.deb /tmp/roboforge-deb-extract
+          test -s /tmp/roboforge-deb-extract/opt/roboforge/frontend/dist/index.html
+      - name: Publish Debian CI artifact (not an official release)
+        uses: actions/upload-artifact@v4
+        with:
+          name: roboforge-linux-deb-candidate
+          path: |
+            dist-packages/*.deb
+            dist-packages/*.sha256
+

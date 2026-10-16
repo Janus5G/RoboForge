@@ -1,0 +1,67 @@
+roboforge/
+├── frontend/
+│   ├── src/
+│   │   ├── plugins/
+│   │   │   ├── types.ts              # Plugin interfaces
+│   │   │   ├── registry.ts           # Plugin registry
+│   │   │   ├── PluginHost.tsx        # Plugin host component
+│   │   │   ├── auto-loader.ts        # Auto-discovery
+│   │   │   ├── ros2/
+│   │   │   │   ├── index.ts
+│   │   │   │   ├── TopicMonitor.tsx
+│   │   │   │   ├── NodeGraph.tsx
+│   │   │   │   └── CommandCenter.tsx
+│   │   │   ├── opcua/
+│   │   │   │   ├── index.ts
+│   │   │   │   ├── AddressSpace.tsx
+│   │   │   │   ├── LiveValues.tsx
+│   │   │   │   └── MethodCaller.tsx
+│   │   │   ├── mqtt/
+│   │   │   │   ├── index.ts
+│   │   │   │   ├── BrokerExplorer.tsx
+│   │   │   │   ├── LiveFeed.tsx
+│   │   │   │   └── PublishConsole.tsx
+│   │   │   ├── isaac-sim/
+│   │   │   │   ├── index.ts
+│   │   │   │   ├── SimControl.tsx
+│   │   │   │   └── SceneViewer.tsx
+│   │   │   ├── siemens/
+│   │   │   │   ├── index.ts
+│   │   │   │   ├── AssetBrowser.tsx
+│   │   │   │   └── WorkOrders.tsx
+│   │   │   ├── arduino/
+│   │   │   │   ├── index.ts
+│   │   │   │   ├── SerialMonitor.tsx
+│   │   │   │   └── FirmwareUpload.tsx
+│   │   │   └── home-assistant/
+│   │   │       ├── index.ts
+│   │   │       ├── EntityGrid.tsx
+│   │   │       └── Automations.tsx
+│   │   ├── components/
+│   │   │   ├── Sidebar.tsx
+│   │   │   ├── AIGenerator.tsx
+│   │   │   ├── CodeViewer.tsx
+│   │   │   └── SettingsPanel.tsx
+│   │   ├── styles/
+│   │   │   └── app.css
+│   │   └── App.tsx
+│   ├── package.json
+│   └── vite.config.ts
+├── backend/
+│   ├── server.js
+│   ├── detector.js
+│   ├── llm/
+│   │   ├── ollama.js
+│   │   └── codex.js
+│   ├── prompts/
+│   │   ├── system.js
+│   │   └── task.js
+│   └── adapters/
+│       ├── ros2.js
+│       ├── opcua.js
+│       ├── mqtt.js
+│       ├── isaac-sim.js
+│       ├── siemens.js
+│       ├── arduino.js
+│       └── home-assistant.js
+└── docker-compose.yml

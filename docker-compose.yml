@@ -1,0 +1,28 @@
+# No external port 0.0.0.0 exposure by default.
+# If Ollama runs on the host, configure OLLAMA_URL and ALLOW_REMOTE_OLLAMA explicitly.
+services:
+  roboforge:
+    build: .
+    ports:
+      - "127.0.0.1:3001:3001"
+    environment:
+      HOST: 0.0.0.0
+      PORT: 3001
+      OLLAMA_URL: ${OLLAMA_URL:-http://host.docker.internal:11434}
+      OLLAMA_MODEL: ${OLLAMA_MODEL:-qwen3:4b-instruct}
+      ALLOW_REMOTE_OLLAMA: ${ALLOW_REMOTE_OLLAMA:-1}
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+      OPENAI_MODEL: ${OPENAI_MODEL:-gpt-4.1-mini}
+      DEEPSEEK_API_KEY: ${DEEPSEEK_API_KEY:-}
+      DEEPSEEK_MODEL: ${DEEPSEEK_MODEL:-deepseek-chat}
+      COMPATIBLE_API_URL: ${COMPATIBLE_API_URL:-}
+      COMPATIBLE_API_KEY: ${COMPATIBLE_API_KEY:-}
+      COMPATIBLE_MODEL: ${COMPATIBLE_MODEL:-}
+      SIEMENS_API_BASE: ${SIEMENS_API_BASE:-}
+      SIEMENS_API_TOKEN: ${SIEMENS_API_TOKEN:-}
+      ALLOWED_ORIGINS: ${ALLOWED_ORIGINS:-}
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true

@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#172127">
+  <meta name="description" content="RoboForge Studio: local-first industrial AI engineering workbench for ROS 2, OPC UA, MQTT and more. Explore practical use cases and current integration boundaries.">
+  <title>RoboForge Studio — Engineering, connected by design</title>
+  <link rel="canonical" href="https://janus5g.github.io/RoboForge/">
+  <link rel="icon" type="image/svg+xml" href="assets/logo.svg">
+  <link rel="stylesheet" href="assets/site.css">
+  <script src="assets/site.js" defer></script>
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to content</a>
+<header class="site-header">
+  <div class="wrap header-inner">
+    <a class="brand" href="#top" aria-label="RoboForge Studio homepage"><img src="assets/logo.svg" alt=""><span><strong>RoboForge<span class="brand-dot">.</span></strong><small>INDUSTRIAL STUDIO</small></span></a>
+    <nav class="nav" aria-label="Primary navigation">
+      <a href="#applications">Applications</a><a href="#integrations">Integrations</a><a href="#ai">AI Providers</a><a href="#getting-started">Get started</a>
+    </nav>
+    <div class="header-controls"><button id="themeToggle" class="theme-button" type="button" aria-label="Switch to light theme"><span class="theme-icon" aria-hidden="true">◐</span><span class="theme-label">Light mode</span></button><a class="header-guide" href="https://github.com/Janus5G/RoboForge#readme" target="_blank" rel="noopener noreferrer">README <span aria-hidden="true">↗</span></a></div>
+  </div>
+</header>
+<main id="main">
+<section class="hero" id="top">
+  <div class="hero-glow" aria-hidden="true"></div>
+  <div class="wrap hero-layout">
+    <div class="hero-copy">
+      <div class="eyebrow"><span class="live-line"></span> INTRODUCING ROBOFORGE STUDIO <span class="version">v0.4.0</span></div>
+      <h1>From ideas to<br><em>working systems.</em></h1>
+      <p class="lead">Explore industrial protocols, prototype robotic integrations and review AI-assisted code from one local-first engineering workspace.</p>
+      <div class="hero-actions"><a class="btn btn-primary" href="#applications">Explore applications <span aria-hidden="true">↗</span></a><a class="btn btn-secondary" href="#getting-started">View setup guide <span aria-hidden="true">→</span></a></div>
+      <div class="hero-metrics"><div><strong>10</strong><span>bundled integrations</span></div><div><strong>04</strong><span>AI provider options</span></div><div><strong>02</strong><span>interface themes</span></div></div>
+    </div>
+    <div class="hero-visual" aria-label="Stylized representation of the RoboForge integration platform">
+      <div class="orbital-outer"><div class="orbit orbit-a"></div><div class="orbit orbit-b"></div><div class="orb-core"><img src="assets/logo.svg" alt=""></div><div class="orb-node orb-n1"><span>ROS 2</span></div><div class="orb-node orb-n2"><span>OPC UA</span></div><div class="orb-node orb-n3"><span>MQTT</span></div><div class="orb-node orb-n4"><span>AI</span></div></div>
+      <div class="visual-caption"><span class="cyan-dot"></span> CONNECTORS DISCOVERED AT BUILD TIME <span>01 — 10</span></div>
+    </div>
+  </div>
+</section>
+<section class="strip"><div class="wrap strip-inner"><span>ROBOTICS</span><i></i><span>INDUSTRIAL DATA</span><i></i><span>IoT & TELEMETRY</span><i></i><span>ASSISTED DEVELOPMENT</span><i></i><span>PROTOTYPING</span></div></section>
+<section class="section" id="applications">
+  <div class="wrap">
+    <div class="section-top"><div><p class="section-kicker">01 / USE CASES</p><h2>One workspace. <span>Several disciplines.</span></h2></div><p class="section-intro">RoboForge helps organize the early stages of engineering work without pretending to replace specialized industrial systems or safety validation.</p></div>
+    <div class="use-grid">
+      <article class="use-card featured"><div class="use-index">01 <span>ROBOTICS</span></div><div class="use-symbol">⬡</div><h3>Prototype robot workflows</h3><p>Inspect ROS 2 nodes and topics over rosbridge, subscribe to selected messages and review explicitly authorized publications.</p><span class="use-foot">ROS 2 · rosbridge</span></article>
+      <article class="use-card"><div class="use-index">02 <span>INDUSTRIAL DATA</span></div><div class="use-symbol">▤</div><h3>Explore machine telemetry</h3><p>Browse a configured OPC UA address space and read values locally before designing higher-level tooling.</p><span class="use-foot">OPC UA · read-only</span></article>
+      <article class="use-card"><div class="use-index">03 <span>CONNECTED SYSTEMS</span></div><div class="use-symbol">◉</div><h3>Build IoT observability</h3><p>Subscribe to MQTT-over-WebSocket topics, observe event traffic and publish only after human confirmation.</p><span class="use-foot">MQTT · EMQX</span></article>
+      <article class="use-card"><div class="use-index">04 <span>AI ASSISTANCE</span></div><div class="use-symbol">✳</div><h3>Draft and inspect code</h3><p>Choose local Ollama or an optional external API. Generate drafts, inspect resulting files and review before deployment.</p><span class="use-foot">Ollama · OpenAI · DeepSeek</span></article>
+      <article class="use-card"><div class="use-index">05 <span>SIMULATION</span></div><div class="use-symbol">◇</div><h3>Observe simulated systems</h3><p>Explore Isaac Sim-related ROS telemetry such as <code>/clock</code> in experimental workflows—without claiming scene-control support.</p><span class="use-foot">Isaac Sim · experimental</span></article>
+      <article class="use-card"><div class="use-index">06 <span>DEVICE EXPLORATION</span></div><div class="use-symbol">▣</div><h3>Inspect connected devices</h3><p>Monitor authorized Arduino serial data, Home Assistant entities and selected enterprise API resources where available.</p><span class="use-foot">Arduino · Home Assistant · Siemens</span></article>
+      <article class="use-card"><div class="use-index">07 <span>SOFTWARE ANALYSIS</span></div><div class="use-symbol">⌘</div><h3>Inspect application structure</h3><p>Use optional local REA to collect static analysis Evidence from selected JavaScript/Electron, .NET, Go and Rust artifacts with explicit authorization.</p><span class="use-foot">REA · opt-in · experimental</span></article>
+    </div>
+  </div>
+</section>
+<section class="section showcase" id="interface">
+  <div class="wrap">
+    <div class="section-top"><div><p class="section-kicker">02 / INTERFACE</p><h2>Engineered for <span>clarity.</span></h2></div><p class="section-intro">Graphite, silver and cyan. A restrained working environment with distinct light and dark appearances.</p></div>
+    <div class="preview-shell"><div class="preview-topbar"><div class="preview-brand"><span class="cyan-dot"></span> STUDIO INTERFACE <span class="preview-state">DESIGN PREVIEW</span></div><div class="preview-switch" role="group" aria-label="Select preview image"><button class="preview-tab active" type="button" data-preview="dark" aria-pressed="true">Dark</button><button class="preview-tab" type="button" data-preview="light" aria-pressed="false">Light</button></div></div><div class="screenshot-frame"><img id="studioShot" src="screenshots/overview-dark.png" alt="Dark graphite and cyan design preview of RoboForge's engineering overview" width="1440" height="750"></div><p class="preview-disclaimer"><span>ⓘ</span> These are approved <strong>static design previews</strong>, not live React/runtime or hardware test screenshots. The depicted status indicators are illustrative.</p></div>
+  </div>
+</section>
+<section class="section" id="integrations"><div class="wrap"><div class="section-top"><div><p class="section-kicker">03 / CONNECTORS</p><h2>Bring your <span>toolchain together.</span></h2></div><p class="section-intro">Ten bundled integration modules are documented here. Each has defined limitations; experimental integrations have not been validated for industrial deployment.</p></div>
+<div class="connector-grid">
+  <div class="connector"><span class="connector-icon">⬡</span><div><h3>ROS 2 <small>CORE</small></h3><p>rosbridge inspection, subscriptions, confirmed publish</p></div></div>
+  <div class="connector"><span class="connector-icon">▤</span><div><h3>OPC UA <small>CORE</small></h3><p>Local address-space browse and read</p></div></div>
+  <div class="connector"><span class="connector-icon">◉</span><div><h3>MQTT / EMQX <small>CORE</small></h3><p>WebSocket telemetry and confirmed publish</p></div></div>
+  <div class="connector"><span class="connector-icon">◇</span><div><h3>NVIDIA Isaac Sim <small class="experimental">EXPERIMENTAL</small></h3><p>ROS-based clock observation; no scene control</p></div></div>
+  <div class="connector"><span class="connector-icon">⌘</span><div><h3>Siemens Xcelerator <small class="experimental">EXPERIMENTAL</small></h3><p>Product-specific configured HTTPS API inspection</p></div></div>
+  <div class="connector"><span class="connector-icon">▣</span><div><h3>Arduino <small class="experimental">EXPERIMENTAL</small></h3><p>Permission-gated Web Serial monitoring</p></div></div>
+  <div class="connector"><span class="connector-icon">⌂</span><div><h3>Home Assistant <small class="experimental">EXPERIMENTAL</small></h3><p>Authenticated entity and automation observation</p></div></div>
+  <div class="connector"><span class="connector-icon">⌕</span><div><h3>REA Analysis <small class="experimental">EXPERIMENTAL</small></h3><p>Optional local static analysis Evidence · external official REA CLI required</p></div></div>
+  <div class="connector"><span class="connector-icon">◇</span><div><h3>Refract Studio <small class="experimental">EXPERIMENTAL</small></h3><p>Optional isolated CPL → CPA text preview; trusted local checkout required</p></div></div>
+  <div class="connector"><span class="connector-icon">◉</span><div><h3>DeepSeek Janus <small class="experimental">EXPERIMENTAL</small></h3><p>Multimodal integration planned; no inference or bundled model weights</p></div></div>
+  <div class="connector no-action"><span class="connector-icon plus">+</span><div><h3>Trusted extensions</h3><p>New bundled modules can be added to source and discovered at build time. No arbitrary remote code loading.</p></div></div>
+</div></div></section>
+<section class="section ai-section" id="ai"><div class="wrap ai-grid"><div><p class="section-kicker">04 / PROVIDERS</p><h2>Keep AI <span>on your terms.</span></h2><p class="ai-description">Local-first doesn't mean local-only. RoboForge defaults to Ollama; external model services are optional and explicitly selected in Settings. Credentials must stay private.</p><div class="ai-notice"><span class="notice-icon">✳</span><div><strong>Code generation is assistance, not deployment.</strong><p>Results are reviewable text. Generated commands must not be executed on robots or machines without independent validation and operator approval.</p></div></div></div>
+<div class="provider-stack"><div class="provider-row"><span>01</span><div><strong>Ollama</strong><small>Local AI models, local-first default</small></div><span class="provider-flag">DEFAULT</span></div><div class="provider-row"><span>02</span><div><strong>OpenAI API</strong><small>Optional external service</small></div><span class="provider-flag optional">OPTIONAL</span></div><div class="provider-row"><span>03</span><div><strong>DeepSeek</strong><small>Optional external service</small></div><span class="provider-flag optional">OPTIONAL</span></div><div class="provider-row"><span>04</span><div><strong>Compatible API</strong><small>Explicitly configured backend URL</small></div><span class="provider-flag optional">OPTIONAL</span></div></div></div></section>
+<section class="section start-section" id="getting-started"><div class="wrap start-grid"><div><p class="section-kicker">05 / GET STARTED</p><h2>Run locally.<br><span>Work deliberately.</span></h2><p>Extract the source archive, install dependencies, run the automated tests and open the application. Node.js 20.19+ or 22+ and npm are required for the first build.</p><p class="start-note">For Windows setup, Linux launchers, optional integrations and configuration, see the <a href="https://github.com/Janus5G/RoboForge#quick-start" target="_blank" rel="noopener noreferrer">project README on GitHub</a>. The website you are viewing is a project presentation, not the RoboForge application.</p></div><div class="terminal"><div class="terminal-head"><span class="dots"><i></i><i></i><i></i></span><span>LINUX / MACOS SHELL</span><button id="copyCommand" type="button" aria-label="Copy quick start commands">Copy</button></div><pre id="installCommands"><code>npm --prefix frontend install
+npm --prefix frontend run build
+npm --prefix backend test
+node backend/server.js</code></pre><div class="terminal-foot">Open <strong>http://127.0.0.1:3001</strong> after starting the server</div></div></div></section>
+<section class="section disclaimer-section" id="safety"><div class="wrap disclaimer"><div class="disclaimer-mark">!</div><div><h2>Engineering tool. Not an industrial safety controller.</h2><p>Frontend production build and real hardware, Siemens tenant, model provider and service integrations have not been independently verified in this presentation package. Local API health does not prove that connected equipment is available. Any live deployment requires separate authorization, safety review and acceptance testing.</p></div></div></section>
+<section class="section" id="community">
+  <div class="wrap">
+    <div class="section-top">
+      <div>
+        <p class="section-kicker">06 / OPEN SOURCE</p>
+        <h2>Built to evolve. <span>Open to ideas.</span></h2>
+      </div>
+      <p class="section-intro">RoboForge Studio is an open-source engineering workbench released under the MIT License. Explore the code, follow development and contribute on GitHub.</p>
+    </div>
+    <div class="publish-note">
+      <strong>Explore the source. Help shape the next release.</strong>
+      <p>Developers and engineers can contribute bug reports, reproducible test cases, documentation and proposals for new integrations. RoboForge remains under active development, and connections to physical industrial systems require independent validation before use.</p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="https://github.com/Janus5G/RoboForge" target="_blank" rel="noopener noreferrer">View on GitHub <span aria-hidden="true">↗</span></a>
+        <a class="btn btn-secondary" href="https://github.com/Janus5G/RoboForge/issues" target="_blank" rel="noopener noreferrer">Report an issue <span aria-hidden="true">↗</span></a>
+        <a class="btn btn-secondary" href="https://github.com/Janus5G/RoboForge/blob/main/CONTRIBUTING.md" target="_blank" rel="noopener noreferrer">Contributing guide <span aria-hidden="true">↗</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+<footer class="footer">
+  <div class="wrap footer-inner">
+    <div class="footer-brand"><img src="assets/logo.svg" alt=""><div><strong>RoboForge Studio</strong><small>Industrial engineering workbench · v0.4.0</small></div></div>
+    <div class="footer-links">
+      <a href="#top">Back to top ↑</a>
+      <a href="#community">Open source</a>
+      <a href="https://github.com/Janus5G/RoboForge#readme" target="_blank" rel="noopener noreferrer">README</a>
+      <a href="https://github.com/Janus5G/RoboForge/blob/main/SECURITY.md" target="_blank" rel="noopener noreferrer">Security policy</a>
+      <a href="https://github.com/Janus5G/RoboForge/blob/main/LICENSE" target="_blank" rel="noopener noreferrer">MIT License</a>
+    </div>
+    <p class="footer-note">© 2026 Janus5G · MIT License. Interface images are design previews, not hardware test evidence.</p>
+  </div>
+</footer>
+</body></html>

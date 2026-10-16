@@ -1,0 +1,1 @@
+import IsaacPanel from './IsaacPanel';import type {PluginComponentProps} from '../types';export default function SceneViewer(props:PluginComponentProps){return <IsaacPanel {...props} mode="scene-viewer"/>;}

@@ -1,0 +1,1 @@
+import SiemensPanel from './SiemensPanel';import type {PluginComponentProps} from '../types';export default function WorkOrders(props:PluginComponentProps){return <SiemensPanel {...props} mode="work-orders"/>;}

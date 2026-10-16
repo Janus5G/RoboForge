@@ -1,0 +1,1 @@
+import IsaacPanel from './IsaacPanel';import type {PluginComponentProps} from '../types';export default function SimControl(props:PluginComponentProps){return <IsaacPanel {...props} mode="sim-control"/>;}

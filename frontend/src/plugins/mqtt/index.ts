@@ -1,0 +1,2 @@
+import {lazy} from 'react';import type {PluginManifest} from '../types';
+export const mqttPlugin:PluginManifest={id:'mqtt',name:'MQTT / EMQX',version:'0.2.0',icon:'📡',category:'production',description:'Direct MQTT over WebSockets, observed topics, subscriptions and confirmed publish',capabilities:[{id:'broker-explorer',label:'Broker Explorer',component:lazy(()=>import('./BrokerExplorer'))},{id:'live-feed',label:'Live Feed',component:lazy(()=>import('./LiveFeed'))},{id:'publish-console',label:'Publish Console',component:lazy(()=>import('./PublishConsole'))}]};

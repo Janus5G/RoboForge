@@ -1,0 +1,1 @@
+import OpcuaPanel from './OpcuaPanel';import type {PluginComponentProps} from '../types';export default function MethodCaller(props:PluginComponentProps){return <OpcuaPanel {...props} mode="method-caller"/>;}

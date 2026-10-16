@@ -1,0 +1,1 @@
+import OpcuaPanel from './OpcuaPanel';import type {PluginComponentProps} from '../types';export default function LiveValues(props:PluginComponentProps){return <OpcuaPanel {...props} mode="live-values"/>;}

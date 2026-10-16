@@ -1,0 +1,1 @@
+import HomePanel from './HomePanel';import type {PluginComponentProps} from '../types';export default function Automations(props:PluginComponentProps){return <HomePanel {...props} mode="automation"/>;}

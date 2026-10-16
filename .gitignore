@@ -1,0 +1,53 @@
+# Dependency installs / build output
+**/node_modules/
+**/dist/
+**/build/
+**/.vite/
+**/coverage/
+**/.cache/
+
+# Credentials and machine-specific configuration (keep .env.example)
+.env
+.env.*
+!.env.example
+*.pem
+*.p12
+*.pfx
+*.key
+*.crt
+*.cert
+credentials.json
+secrets.json
+
+# Test artifacts and logs
+*.log
+logs/
+*.pid
+npm-debug.log*
+yarn-debug.log*
+.nyc_output/
+playwright-report/
+test-results/
+
+# Workspace / IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Local packaging artifacts / compressed releases
+*.deb
+*.rpm
+*.AppImage
+*.tar.gz
+*.zip
+
+# Python / temporary tools
+__pycache__/
+.pytest_cache/
+*.pyc
+.tmp/
+tmp/

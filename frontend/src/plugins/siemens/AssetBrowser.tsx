@@ -1,0 +1,1 @@
+import SiemensPanel from './SiemensPanel';import type {PluginComponentProps} from '../types';export default function AssetBrowser(props:PluginComponentProps){return <SiemensPanel {...props} mode="asset-browser"/>;}

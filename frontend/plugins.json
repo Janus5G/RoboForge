@@ -1,0 +1,112 @@
+{
+  "plugins": [
+    {
+      "id": "ros2",
+      "name": "ROS 2",
+      "icon": "🤖",
+      "category": "production",
+      "capabilities": [
+        "topic-monitor",
+        "node-graph",
+        "command-center"
+      ]
+    },
+    {
+      "id": "opcua",
+      "name": "OPC UA",
+      "icon": "🏭",
+      "category": "production",
+      "capabilities": [
+        "address-space",
+        "live-values",
+        "method-caller"
+      ]
+    },
+    {
+      "id": "mqtt",
+      "name": "MQTT / EMQX",
+      "icon": "📡",
+      "category": "production",
+      "capabilities": [
+        "broker-explorer",
+        "live-feed",
+        "publish-console"
+      ]
+    },
+    {
+      "id": "isaac-sim",
+      "name": "NVIDIA Isaac Sim",
+      "icon": "🧪",
+      "category": "experimental",
+      "experimental": true,
+      "capabilities": [
+        "sim-control",
+        "scene-viewer"
+      ]
+    },
+    {
+      "id": "siemens-xcelerator",
+      "name": "Siemens Xcelerator",
+      "icon": "⚙️",
+      "category": "experimental",
+      "experimental": true,
+      "capabilities": [
+        "asset-browser",
+        "work-orders"
+      ]
+    },
+    {
+      "id": "arduino",
+      "name": "Arduino",
+      "icon": "🔌",
+      "category": "experimental",
+      "experimental": true,
+      "capabilities": [
+        "serial-monitor",
+        "firmware-upload"
+      ]
+    },
+    {
+      "id": "home-assistant",
+      "name": "Home Assistant",
+      "icon": "🏠",
+      "category": "experimental",
+      "experimental": true,
+      "capabilities": [
+        "entity-grid",
+        "automation"
+      ]
+    },
+    {
+      "id": "rea",
+      "name": "REA Analysis",
+      "icon": "🔎",
+      "category": "experimental",
+      "experimental": true,
+      "capabilities": [
+        "static-analysis",
+        "cli-status"
+      ]
+    },
+    {
+      "id": "refract",
+      "name": "Refract Studio",
+      "icon": "◇",
+      "category": "experimental",
+      "experimental": true,
+      "capabilities": [
+        "compiler-preview"
+      ]
+    },
+    {
+      "id": "janus",
+      "name": "DeepSeek Janus",
+      "icon": "◉",
+      "category": "experimental",
+      "experimental": true,
+      "capabilities": [
+        "runtime-status"
+      ]
+    }
+  ]
+}

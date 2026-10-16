@@ -1,0 +1,1 @@
+import HomePanel from './HomePanel';import type {PluginComponentProps} from '../types';export default function EntityGrid(props:PluginComponentProps){return <HomePanel {...props} mode="entity-grid"/>;}

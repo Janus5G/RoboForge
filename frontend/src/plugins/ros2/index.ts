@@ -1,0 +1,2 @@
+import {lazy} from 'react';import type {PluginManifest} from '../types';
+export const ros2Plugin:PluginManifest={id:'ros2',name:'ROS 2',version:'0.2.0',icon:'🤖',description:'ROS graph, topics and manual, reviewed messages via rosbridge',category:'production',capabilities:[{id:'topic-monitor',label:'Topic Monitor',component:lazy(()=>import('./TopicMonitor'))},{id:'node-graph',label:'Node Graph',component:lazy(()=>import('./NodeGraph'))},{id:'command-center',label:'Command Center',component:lazy(()=>import('./CommandCenter'))}]};
