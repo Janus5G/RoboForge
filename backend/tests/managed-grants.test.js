@@ -99,7 +99,16 @@ test('Managed MCP: metadata is free; controlled calls require grants; REST bypas
    const stat=await fetch(base+'/api/mcp/status').then(r=>r.json());assert.equal(stat.managedMode,true);
    delete process.env.ROBOFORGE_CHROMANEURAL_MANAGED;
    const standalone=await rpc(base,10,'tools/call',call(tool,args));assert.equal(standalone.body.result.isError,false);assert.equal(count,2);
-   assert.equal((await fetch(base+'/')).status,503); // frontend not built in test environment
+   // CI builds the frontend before backend tests, while local source checkouts may not.
+   // Standalone mode must serve the UI when built and report 503 only when absent.
+   const frontendIndex=path.resolve(__dirname,'../../frontend/dist/index.html');
+   const response=await fetch(base+'/');
+   if(fs.existsSync(frontendIndex)) {
+     assert.equal(response.status,200);
+     assert.match(response.headers.get('content-type')||'',/^text\/html\b/i);
+   } else {
+     assert.equal(response.status,503);
+   }
  }finally{await stop();refract.compile=original;resetEnv();f.dispose();}
 });
 
