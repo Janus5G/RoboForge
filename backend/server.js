@@ -12,6 +12,7 @@ const {opcua} = require('./adapters/opcua');
 const {inspect} = require('./adapters/siemens');
 const rea = require('./adapters/rea');
 const gateway = require('./mcp/gateway');
+const managedGrants = require('./mcp/managed-grants');
 const refract = require('./adapters/refract');
 const janus = require('./adapters/janus');
 const fs = require('node:fs');
@@ -77,14 +78,18 @@ const server=http.createServer(async(req,res)=>{
     if (p==='/mcp') return gateway.handleHttp(req,res);
     // APIs use same-origin requests, even for loopback, to reduce browser-based local exploitation.
     if (p.startsWith('/api/') && !localOrigin(req)) return fail(res,403,'Origin not allowed');
+    // Managed mode is a tool-service instance, not a standalone GUI runtime.
+    // Otherwise equivalent REST execution routes would evade MCP authorization.
+    if (managedGrants.isManaged() && p.startsWith('/api/') && req.method !== 'GET')
+      return fail(res,403,'Execution REST endpoints disabled in ChromaNeural-managed mode');
     if(req.method==='GET' && p==='/api/health') return reply(res,200,{ok:true,name:'RoboForge',version:APP_VERSION,status:'running'});
     if(req.method==='GET' && p==='/api/plugins') return reply(res,200,PLUGINS.map(({id,experimental,capabilities,category})=>({id:id==='siemens-xcelerator'?'siemens':id,canonicalId:id,enabled:true,experimental,category,capabilities})));
     if(req.method==='GET' && p==='/api/config') return reply(res,200,{app:'RoboForge',version:APP_VERSION,providers:[{id:'ollama',label:'Local Ollama',configured:true},{id:'openai',label:'OpenAI API',configured:!!process.env.OPENAI_API_KEY},{id:'deepseek',label:'DeepSeek API',configured:!!process.env.DEEPSEEK_API_KEY},{id:'compatible',label:'Compatible API',configured:!!process.env.COMPATIBLE_API_URL}],capabilities:PLUGINS});
-    if(req.method==='GET' && p==='/api/mcp/status') return reply(res,200,{enabled:gateway.isEnabled(),transport:'streamable-http',endpoint:gateway.isEnabled()?'http://127.0.0.1:'+req.socket.localPort+'/mcp':null,stateless:true,tools:gateway.TOOL_DEFINITIONS.map(x=>x.name),limits:{tools:gateway.TOOL_DEFINITIONS.length,resultBytes:32768},warning:'Connecting to MCP requires separate ChromaNeural approval; this status is not proof of compatibility.'});
+    if(req.method==='GET' && p==='/api/mcp/status') return reply(res,200,{enabled:gateway.isEnabled(),transport:'streamable-http',endpoint:gateway.isEnabled()?'http://127.0.0.1:'+req.socket.localPort+'/mcp':null,stateless:true,tools:gateway.TOOL_DEFINITIONS.map(x=>x.name),limits:{tools:gateway.TOOL_DEFINITIONS.length,resultBytes:32768},managedMode:managedGrants.isManaged(),managedVerifierReady:managedGrants.verifierReady(),managedExecutionAuthorization:managedGrants.isManaged()?'required for controlled tools':'not enforced (standalone mode)',warning:'Connecting to MCP requires separate ChromaNeural approval; this status is not proof of compatibility.'});
     if(req.method==='GET' && p==='/api/refract/status') return reply(res,200,refract.status());
     if(req.method==='GET' && p==='/api/janus/status') return reply(res,200,janus.status());
     if(req.method==='POST' && p==='/api/refract/compile') {const b=await readJson(req);if(!b||typeof b.source!=='string')return fail(res,400,'CPL source required');return reply(res,200,await refract.compile(b.source));}
-    if(req.method==='GET' && p==='/api/rea/status') return reply(res,200,await rea.status());
+    if(req.method==='GET' && p==='/api/rea/status') return reply(res,200,managedGrants.isManaged()?{enabled:rea.enabled(),externalProbe:false,readiness:'REA CLI probing is disabled in ChromaNeural-managed mode; authorization is required for controlled analysis'}:await rea.status());
     if(req.method==='POST' && p==='/api/rea/analyze') return reply(res,200,await rea.analyze(await readJson(req)));
     if(req.method==='POST' && p==='/api/generate') {
       const body=await readJson(req); const prompt=body?.prompt;
@@ -107,9 +112,11 @@ const server=http.createServer(async(req,res)=>{
     }
     if(req.method==='POST' && p==='/api/siemens/inspect') return reply(res,200,await inspect(await readJson(req)));
     if(p.startsWith('/api/')) return fail(res,404,'Unknown API');
+    if(managedGrants.isManaged() && (req.method==='GET'||req.method==='HEAD'))
+      return fail(res,403,'Standalone frontend unavailable in ChromaNeural-managed mode');
     if(req.method==='GET'||req.method==='HEAD')return serveStatic(req,res,url);
     return fail(res,405,'Method not allowed');
   } catch(e) {const status=(e.status>=400&&e.status<600)?e.status:502; const msg=redactError(e); if(process.env.NODE_ENV!=='test') console.error('[RoboForge]',status,msg); if(!res.headersSent)fail(res,status,msg);else res.end();}
 });
-if(require.main===module){if(!Number.isInteger(PORT)||PORT<=0||PORT>65535){console.error('Invalid PORT');process.exit(1);}server.listen(PORT,HOST,()=>console.log(`RoboForge API available at http://${HOST}:${PORT}`));}
+if(require.main===module){if(!Number.isInteger(PORT)||PORT<=0||PORT>65535){console.error('Invalid PORT');process.exit(1);}if(managedGrants.isManaged()&&!['127.0.0.1','::1','localhost'].includes(HOST)){console.error('Managed RoboForge must bind to loopback only');process.exit(1);}server.listen(PORT,HOST,()=>console.log(`RoboForge API available at http://${HOST}:${PORT}`));}
 module.exports={server, readJson};

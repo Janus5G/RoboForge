@@ -45,3 +45,10 @@ Checked GitHub sources `client/chroma/mcp_client.py` and `client/chroma/mcp_conf
 - `npm run docs:check`: validates local site/resources/README assets; not a browser test.
 - Real ChromaNeural client test **REQUIRED BEFORE ENABLEMENT IN PRODUCTION**: add one approved local HTTP server profile and approve each tool fingerprint separately, then verify `initialize`, `tools/list`, catalog, status, disabled Refract, schema-change reapproval, timeout, failure/offline behavior, restart, and absence of regressions to eight core modules. Do not alter Internet Identity, storage, WorkQueue or ChromaSpeechAI to accommodate gateway.
 - Do not claim Janus inference, full REA MCP, Refract compilation or physical industrial services are production validated.
+
+## ChromaNeural resource-based Fair Use compatibility candidate (not published)
+
+A standalone verifier implementation is documented in
+[`CHROMANEURAL_FAIR_USE_COMPATIBILITY.md`](CHROMANEURAL_FAIR_USE_COMPATIBILITY.md).
+This optional profile defaults off, **does not** change tool definitions, and verifies bounded signed single-use execution grants—not one-tool/one-point payments. ChromaNeural alone measures and normalizes CPU/RAM/data/GPU resource use and performs actual ChromaPoints accounting. A resource ceiling that RoboForge cannot enforce is rejected. ChromaNeural's original eight modules are not touched.
+The actual ChromaNeural client must still be adapted and tested separately.

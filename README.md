@@ -64,7 +64,10 @@ The [public project website](https://janus5g.github.io/RoboForge/) explains thes
 
 **Auto-discovery** means **bundled trusted plugin source modules are discovered during the frontend build** (`import.meta.glob`). It does **not** mean arbitrary remote plugins are executed or that attached industrial hardware is automatically scanned.
 
-## ChromaNeural module 9 — optional MCP Gateway (v0.4.0)
+## ChromaNeural module 9 — optional MCP Gateway
+
+> **Local, unpublished compatibility candidate:** ChromaNeural-managed Fair Use verifier is documented in [docs/CHROMANEURAL_FAIR_USE_COMPATIBILITY.md](docs/CHROMANEURAL_FAIR_USE_COMPATIBILITY.md). It uses signed one-time, resource-bounded execution grants (never one-tool/one-point tokens); RoboForge has no ChromaPoints balance, price, normalization or accounting. ChromaNeural retains measured resource-based settlement authority. This is not yet verified against the real ChromaNeural client.
+ (v0.4.0)
 
 RoboForge exposes one **optional local Streamable HTTP MCP endpoint** at `http://127.0.0.1:3001/mcp` when `ROBOFORGE_MCP_ENABLED=1`. It is **disabled by default**, **loopback-only** and stateless. ChromaNeural keeps its eight existing modules and independently approves both the connection and each RoboForge tool definition. RoboForge does not change ChromaNeural's code, authentication, WorkQueue, storage, result approval, or ChromaSpeechAI protocols.
 

@@ -9,6 +9,7 @@ const {PLUGINS}=require('../plugins');
 const rea=require('../adapters/rea');
 const refract=require('../adapters/refract');
 const janus=require('../adapters/janus');
+const grants=require('./managed-grants');
 const MAX_REQUEST=12288;
 const MAX_REPLY=32768;
 const SUPPORTED=['2025-11-25','2025-06-18','2025-03-26'];
@@ -33,6 +34,9 @@ const TOOL_DEFINITIONS=Object.freeze([
     annotations:{readOnlyHint:true,destructiveHint:false,openWorldHint:false}
   }
 ]);
+// Explicit allow-list: every new/future tool is controlled unless independently audited.
+const METADATA_ONLY = new Set(['roboforge_catalog_v1','roboforge_module_status_v1']);
+function isControlled(name){return !METADATA_ONLY.has(name);}
 function isEnabled(){return process.env.ROBOFORGE_MCP_ENABLED==='1';}
 function isLoopback(remote){return remote==='127.0.0.1'||remote==='::1'||remote==='::ffff:127.0.0.1';}
 function validHost(req){
@@ -69,10 +73,10 @@ function moduleStatus(id){
  return {id:p.id,name:p.name,category:p.category,experimental:p.experimental,capabilities:p.capabilities,registration:'bundled',...extra,externalVerified:false};
 }
 function catalog(){return {version:require('../../package.json').version,kind:'RoboForge optional MCP gateway',modules:PLUGINS.map(x=>({id:x.id,name:x.name,experimental:x.experimental})),notes:'Registration is not hardware verification; no module is automatically authorized by discovery.',toolCount:TOOL_DEFINITIONS.length};}
-async function invokeTool(name,args){
+async function invokeTool(name,args,limits={}){
  if(name==='roboforge_catalog_v1')return catalog();
  if(name==='roboforge_module_status_v1')return moduleStatus(args.module_id);
- if(name==='roboforge_refract_compile_cpl_v1')return refract.compile(args.source);
+ if(name==='roboforge_refract_compile_cpl_v1')return refract.compile(args.source,{maxWallMillis:Math.min(limits.maxWallMillis??5500,5500),maxOutputBytes:Math.min(limits.maxOutputBytes??26000,26000)});
  throw new Error('Unregistered tool');
 }
 async function handleRequest(message){
@@ -98,14 +102,42 @@ async function handleRequest(message){
     const name=message.params?.name;const args=message.params?.arguments??{};
     if(typeof name!=='string'||!TOOL_DEFINITIONS.some(t=>t.name===name))return err(id,-32602,'Unknown or unavailable tool');
     if(!validParams(name,args))return err(id,-32602,'Invalid tool arguments');
+    let receipt,controlledLimits={},preflight;
+    if(grants.isManaged()&&isControlled(name)){
+      // All validation must complete before the one-way consumption. Neither model
+      // arguments nor a browser-provided "approved" boolean confer authority.
+      if(!object(message.params)||Object.keys(message.params).some(k=>!['name','arguments','_meta'].includes(k)))return err(id,-32602,'Invalid tool request');
+      try{
+        const verifier=grants.getVerifier();
+        const envelope=message.params?._meta?.[grants.META_KEY];
+        const validated=verifier.validate(envelope,name,args);
+        verifier.consume(validated); // strictly before adapter invocation
+        controlledLimits=validated.resourceEnvelope;
+        preflight=validated.preflight;
+        receipt={authorizationId:validated.authorizationId,reservationId:validated.reservationId,authorizationAccepted:true,tool:validated.tool};
+      }catch(_){return err(id,-32001,'ChromaNeural execution authorization required or invalid');}
+    }
+    const startedAtMs=Date.now();
+    const started=process.hrtime.bigint();
+    // Wall time is enforced by the Refract subprocess kill timer, not merely
+    // a Promise.race that could leave computation running after a timeout.
+    const telemetry=(state,bytes=0)=>receipt?{'net.aagii.chromaneural/execution-telemetry':{
+      authorizationId:receipt.authorizationId,reservationId:receipt.reservationId,
+      advisoryOnly:true,authoritativeForChromaPoints:false,startedAtMs,
+      wallElapsedMillis:Number((process.hrtime.bigint()-started)/1000000n),
+      inputBytes:preflight.inputBytes,outputBytes:bytes,
+      state,enforcedCeilings:Object.keys(controlledLimits).sort()
+    }}:{};
     try{
-      const output=await invokeTool(name,args);
+      const output=await invokeTool(name,args,controlledLimits);
       let text=JSON.stringify(output);
-      if(Buffer.byteLength(text)>30000)throw new Error('Result exceeds MCP safe size');
-      return result(id,{content:[{type:'text',text}],isError:false});
+      const outputBytes=Buffer.byteLength(text,'utf8');
+      if(outputBytes>30000||(receipt&&controlledLimits.maxOutputBytes!==undefined&&outputBytes>controlledLimits.maxOutputBytes))throw new Error('Result exceeds authorized output ceiling');
+      return result(id,{content:[{type:'text',text}],isError:false,...(receipt?{_meta:{'net.aagii.chromaneural/authorization-receipt':receipt,...telemetry('completed',outputBytes)}}:{})});
     }catch(e){
       const safe=(String(e?.message||'Tool failure')).replace(/[\r\n]/g,' ').slice(0,220);
-      return result(id,{content:[{type:'text',text:JSON.stringify({error:safe})}],isError:true});
+      const errorText=JSON.stringify({error:safe});
+      return result(id,{content:[{type:'text',text:errorText}],isError:true,...(receipt?{_meta:{'net.aagii.chromaneural/authorization-receipt':receipt,...telemetry('error',Buffer.byteLength(errorText,'utf8'))}}:{})});
     }
   }
   default:return err(id,-32601,'Method not found');
@@ -137,4 +169,4 @@ async function handleHttp(req,res){
   response(res,200,reply);
  }catch(e){response(res,e.status||500,{error:e.status?e.message:'Internal MCP error'});}
 }
-module.exports={TOOL_DEFINITIONS,isEnabled,handleHttp,handleRequest,moduleStatus,catalog,requestAllowed};
+module.exports={TOOL_DEFINITIONS,isEnabled,isControlled,handleHttp,handleRequest,moduleStatus,catalog,requestAllowed};
