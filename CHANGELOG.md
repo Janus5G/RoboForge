@@ -1,3 +1,11 @@
+## 0.4.1 — Optional ChromaPlex Coding Agent integration (source candidate)
+
+- Register the eleventh bundled module, preserving the previous ten and all three MCP tool definitions.
+- Integrate optional target-aware safety review, official mandatory ClamAV source preflight and verified-artifact inspection from a trusted standalone Linux Coding Agent installation.
+- Add an AI Code Workspace → Coding Agent review handoff and documentation for independent ChromaPress `.deb` installation.
+- Keep managed-mode execution REST blocked, default-disabled integration, no automatic compiler/build release and no ChromaPoints accounting.
+- Contract tests use a simulated installed Coding Agent; real ClamAV/GUI/standalone secure-build end-to-end acceptance remains pending.
+
 ## 0.4.0 — Optional ChromaNeural MCP Gateway foundation
 
 - Introduce local, disabled-by-default Streamable HTTP MCP endpoint (`/mcp`) with curated read-only tools and versioned schemas.

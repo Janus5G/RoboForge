@@ -2,7 +2,7 @@ import type {PluginManifest} from '../plugins/types';
 import {Icon} from './Icon';
 export type View='generator'|'plugins'|'code'|'settings'|'overview';
 interface Props {view:View;setView:(v:View)=>void;productionPlugins:PluginManifest[];experimentalPlugins:PluginManifest[];activePlugin:string;setActivePlugin:(id:string)=>void;onSearch:()=>void;mobileOpen:boolean;onClose:()=>void;}
-const symbols:Record<string,'radio'|'factory'|'robot'|'plug'|'home'|'cpu'|'layers'|'code'|'terminal'>={'mqtt':'radio','opcua':'factory','ros2':'robot','arduino':'plug','home-assistant':'home','isaac-sim':'cpu','siemens-xcelerator':'layers','rea':'code','refract':'terminal','janus':'cpu'};
+const symbols:Record<string,'radio'|'factory'|'robot'|'plug'|'home'|'cpu'|'layers'|'code'|'terminal'>={'mqtt':'radio','opcua':'factory','ros2':'robot','arduino':'plug','home-assistant':'home','isaac-sim':'cpu','siemens-xcelerator':'layers','rea':'code','refract':'terminal','janus':'cpu','coding-agent':'code'};
 export function pluginIcon(id:string){return symbols[id]||'layers';}
 export function Sidebar({view,setView,productionPlugins,experimentalPlugins,activePlugin,setActivePlugin,onSearch,mobileOpen,onClose}:Props){
  function go(next:View,p?:string){if(p)setActivePlugin(p);setView(next);onClose();}
@@ -20,6 +20,6 @@ export function Sidebar({view,setView,productionPlugins,experimentalPlugins,acti
     <div className="side-group"><p className="side-label">INDUSTRIAL CONNECTORS <span>{productionPlugins.length}</span></p>{plugins(productionPlugins)}</div>
     <div className="side-group"><p className="side-label">EXPERIMENTAL LAB <span>{experimentalPlugins.length}</span></p>{plugins(experimentalPlugins)}</div>
    </div>
-   <div className="sidebar-bottom"><div className="sidebar-product"><span className="product-icon"><Icon name="shield" size={17}/></span><div><strong>Local-first security</strong><small>Human-authorized operations</small></div></div><div className="side-version"><span>RoboForge Studio</span><span>v0.4.0</span></div></div>
+   <div className="sidebar-bottom"><div className="sidebar-product"><span className="product-icon"><Icon name="shield" size={17}/></span><div><strong>Local-first security</strong><small>Human-authorized operations</small></div></div><div className="side-version"><span>RoboForge Studio</span><span>v0.4.1</span></div></div>
   </aside></>;
 }

@@ -17,3 +17,7 @@ Official source: https://github.com/morluto/rea . Upstream MIT License, copyrigh
 ## Other integrations
 
 ROS 2, OPC UA, MQTT/EMQX, NVIDIA Isaac Sim, Siemens Xcelerator, Arduino and Home Assistant are independent trademarks, products, services, specifications and libraries. Bundled compatibility modules do not confer rights to distribute proprietary SDKs or warrant manufacturer certification. Consult dependency licenses before redistribution.
+
+## ChromaPlex Coding Agent (optional)
+
+Project: https://github.com/Janus5G/Chromaplex-Coding-Agent ; MIT-licensed independent Linux application. RoboForge does NOT copy or redistribute its security/compiler code, dependencies, models or desktop GUI. When explicitly enabled, it calls a separately installed trusted checkout's approved Python functions. The original Secure Compile Gate and its third-party license obligations remain authoritative. Installing the standalone `.deb` is a separate user action.

@@ -11,7 +11,7 @@ async function rpc(base,id,method,params={},headers={}){
  const r=await fetch(base+'/mcp',{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json, text/event-stream',...headers},body:JSON.stringify({jsonrpc:'2.0',id,method,params})});return {status:r.status,body:r.status===202?null:await r.json()};
 }
 test('10 modules, stable original 8, curated MCP small tool count and safe-only metadata',()=>{
- assert.equal(PLUGINS.length,10);assert.equal(PLUGINS[8].id,'refract');assert.equal(PLUGINS[9].id,'janus');
+ assert.equal(PLUGINS.length,11);assert.equal(PLUGINS[8].id,'refract');assert.equal(PLUGINS[9].id,'janus');assert.equal(PLUGINS[10].id,'coding-agent');
  assert(gateway.TOOL_DEFINITIONS.length<16);assert(!('enum' in gateway.TOOL_DEFINITIONS[1].inputSchema.properties.module_id),'metadata status schema must remain stable as new plugins are added');assert.deepEqual(gateway.TOOL_DEFINITIONS.map(x=>x.name),['roboforge_catalog_v1','roboforge_module_status_v1','roboforge_refract_compile_cpl_v1']);
  for(const tool of gateway.TOOL_DEFINITIONS){assert.equal(tool.annotations.readOnlyHint,true);assert.equal(tool.annotations.destructiveHint,false);assert.equal(tool.inputSchema.additionalProperties,false);}
 });
@@ -30,7 +30,7 @@ test('MCP handshake, tools/list, module statuses, safe errors and notifications'
   const newer=await rpc(base,13,'initialize',{protocolVersion:'2025-11-25',capabilities:{},clientInfo:{name:'fixture',version:'1'}});assert.equal(newer.body.result.protocolVersion,'2025-11-25');
   const nope=await rpc(base,14,'initialize',{protocolVersion:'2020-01-01'});assert.equal(nope.body.error.code,-32602);
   const tools=await rpc(base,15,'tools/list');assert.equal(tools.body.result.tools.length,3);
-  const all=await rpc(base,16,'tools/call',{name:'roboforge_catalog_v1',arguments:{}});assert.equal(all.body.result.isError,false);assert.equal(JSON.parse(all.body.result.content[0].text).modules.length,10);
+  const all=await rpc(base,16,'tools/call',{name:'roboforge_catalog_v1',arguments:{}});assert.equal(all.body.result.isError,false);assert.equal(JSON.parse(all.body.result.content[0].text).modules.length,11);
   const detail=await rpc(base,17,'tools/call',{name:'roboforge_module_status_v1',arguments:{module_id:'janus'}});assert.equal(detail.body.result.isError,false);assert.match(detail.body.result.content[0].text,/not yet verified/);
   const bad=await rpc(base,18,'tools/call',{name:'roboforge_module_status_v1',arguments:{module_id:'__proto__'}});assert.equal(bad.body.error.code,-32602);
   const dangerous=await rpc(base,19,'tools/call',{name:'run_shell',arguments:{command:'rm -rf /'}});assert.equal(dangerous.body.error.code,-32602);

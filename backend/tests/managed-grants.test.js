@@ -90,7 +90,7 @@ test('Managed MCP: metadata is free; controlled calls require grants; REST bypas
    assert.deepEqual(accepted.body.result._meta['net.aagii.chromaneural/authorization-receipt'],{authorizationId:good.payload.authorizationId,reservationId:good.payload.reservationId,authorizationAccepted:true,tool});
    assert.equal((await rpc(base,8,'tools/call',call(tool,args,good))).body.error.code,-32001);assert.equal(count,1);
    assert.equal((await rpc(base,9,'tools/call',call(tool,{source:'changed'},signed(f,tool,args)))).body.error.code,-32001);assert.equal(count,1);
-   for(const route of ['/api/generate','/api/providers/test','/api/opcua/browse','/api/opcua/read','/api/rea/analyze','/api/refract/compile','/api/siemens/inspect']){
+   for(const route of ['/api/generate','/api/providers/test','/api/opcua/browse','/api/opcua/read','/api/rea/analyze','/api/refract/compile','/api/siemens/inspect','/api/coding-agent/review','/api/coding-agent/preflight','/api/coding-agent/verify']){
      const res=await fetch(base+route,{method:'POST',headers:{'Content-Type':'application/json'},body:'{}'});assert.equal(res.status,403,route);
    }
    assert.equal((await fetch(base+'/api/health')).status,200);

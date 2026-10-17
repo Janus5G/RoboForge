@@ -37,8 +37,8 @@ export default function App(){const [view,setView]=useState<View>('overview');co
  <div className="section-head integrations-title"><div><h2>Integration library</h2><p>Bundled modules detected from the project. Select a connector to work with it.</p></div><div className="filter-pills">{(['all','production','experimental'] as const).map(x=><button className={filter===x?'current':''} key={x} onClick={()=>setFilter(x)}>{x==='all'?'All':x==='production'?'Core':'Experimental'}</button>)}</div></div><div className="integration-cards">{shown.map(p=><button className="integration-card" key={p.id} onClick={()=>navigate('plugins',p.id)}><div className="integration-top"><span className={'integration-symbol '+p.id}><Icon name={pluginIcon(p.id)} size={23}/></span><span className={'integration-tier '+(p.category==='experimental'?'is-experimental':'')}>{p.category==='experimental'?'Experimental':'Core'}</span></div><strong>{p.name}</strong><small>{p.description}</small><span className="integration-action">Open workspace <Icon name="arrow-up-right" size={15}/></span></button>)}</div>
  <div className="bottom-rail"><div><Icon name="shield" size={16}/> Deployment requires independent validation and human approval.</div><div><Icon name="clock" size={14}/> This session: {recent.length?recent[0]:'No workspace actions yet'}</div></div></div>}
  {view==='generator'&&<AIGenerator settings={settings} onCodeGenerated={r=>{setResult(r);setRecent(x=>['AI generation completed',...x].slice(0,4));}} onSettings={()=>navigate('settings')}/>}
- {view==='code'&&<CodeViewer result={result}/>}
+ {view==='code'&&<CodeViewer result={result} onReview={()=>navigate('plugins','coding-agent')}/>}
  {view==='settings'&&<SettingsPanel settings={settings} onChange={changeSettings}/>}
- {view==='plugins'&&<PluginHost pluginId={plugin}/>}
+ {view==='plugins'&&<PluginHost pluginId={plugin} suggestedCode={result?.files?.[0]?.content||result?.code||''}/>}
  </main><footer className="footer"><span>© RoboForge Studio · Engineering workspace</span><span>Local-first · Reviewed actions only</span></footer></div><SearchDialog open={palette} onClose={()=>setPalette(false)} onGo={navigate}/></div>;
 }

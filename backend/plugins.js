@@ -9,6 +9,7 @@ const PLUGINS=[
 {id:'home-assistant',name:'Home Assistant',category:'experimental',experimental:true,capabilities:['entity-grid','automation']},
 {id:'rea',name:'REA Analysis',category:'experimental',experimental:true,capabilities:['static-analysis','cli-status']},
 {id:'refract',name:'Refract Studio',category:'experimental',experimental:true,capabilities:['compiler-preview']},
-{id:'janus',name:'DeepSeek Janus',category:'experimental',experimental:true,capabilities:['runtime-status']}
+{id:'janus',name:'DeepSeek Janus',category:'experimental',experimental:true,capabilities:['runtime-status']},
+{id:'coding-agent',name:'ChromaPlex Coding Agent',category:'experimental',experimental:true,capabilities:['source-review','secure-preflight','verify-build']}
 ];
 module.exports={PLUGINS};

@@ -8,9 +8,9 @@
 
 A local-first workspace for exploring robot software, industrial interfaces and AI-generated code—with explicit operator approval before actions are sent to connected systems.
 
-[![Version](https://img.shields.io/badge/version-0.4.0-19d3ff?style=for-the-badge)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-0.4.1-19d3ff?style=for-the-badge)](CHANGELOG.md)
 [![License: MIT](https://img.shields.io/badge/license-MIT-1f2a30?style=for-the-badge)](LICENSE)
-[![Modules](https://img.shields.io/badge/bundled_modules-10-1f2a30?style=for-the-badge)](#integration-matrix)
+[![Modules](https://img.shields.io/badge/bundled_modules-11-1f2a30?style=for-the-badge)](#integration-matrix)
 [![MCP Gateway](https://img.shields.io/badge/MCP-opt--in-1f2a30?style=for-the-badge)](#chromaneural-module-9--optional-mcp-gateway-v040)
 
 [Explore the project website](https://janus5g.github.io/RoboForge/) ·
@@ -61,8 +61,17 @@ The [public project website](https://janus5g.github.io/RoboForge/) explains thes
 | **REA Analysis** | Invoke four allowlisted official REA static-analysis CLI commands | Explicit, authorized local analysis | Experimental; requires separately installed REA and Node 22.19+/24.11+/26+ |
 | **Refract Studio** | Optional local CPL-to-CPA compiler preview only | Text output, no execution | Experimental; requires installed trusted checkout, no real runtime test |
 | **DeepSeek Janus** | Runtime status only; inference not connected | No model execution or downloads | Experimental; model license separate |
+| **ChromaPlex Coding Agent** | Target-aware source review, fail-closed ClamAV source preflight, existing binary manifest verification | Optional, single-file, no compilation/release/flash | Experimental; installed separately on Linux, end-to-end secure build pending |
 
 **Auto-discovery** means **bundled trusted plugin source modules are discovered during the frontend build** (`import.meta.glob`). It does **not** mean arbitrary remote plugins are executed or that attached industrial hardware is automatically scanned.
+
+## ChromaPlex Coding Agent — optional coding and security integration
+
+ChromaPlex Coding Agent is the **11th** optional RoboForge plugin. A developer can send untrusted AI-generated source from Code Workspace to a bounded target-aware review, request the official upstream fail-closed source preflight (ClamAV mandatory), or independently verify an existing build SHA-256/security manifest from an explicitly approved local directory.
+
+**This is not a second compiler.** The official Coding Agent remains an independent Linux application with its full Secure Compile Gate (quarantine compilation, binary validation and malware scanning, SHA-256 source/output sealing and release controls). RoboForge neither bypasses that chain nor auto-installs external runtimes. The integration is off by default, validates any installed-package SHA256SUMS seal before loading Python modules, and does not modify ChromaPlex OS v2 and does not grant extra MCP tool permissions. See [setup, security boundaries and test results](docs/CODING_AGENT_INTEGRATION.md).
+
+For custom ChromaLinux, install Coding Agent's official `.deb` as an ordinary application through ChromaPress, independently of RoboForge.
 
 ## ChromaNeural module 9 — optional MCP Gateway
 
@@ -228,7 +237,7 @@ The `POST /api/generate` response continues to include `technologies`, `code`, `
 At preparation of this repository package:
 
 - **Backend regression tests:** 16/16 passed locally, covering plugin compatibility, MCP contracts, REA boundaries and HTTP routes.
-- **Local MCP process smoke test:** PASS with real loopback HTTP, an MCP initialize handshake, three curated tools and 10 registered modules.
+- **Local MCP process smoke test:** PASS with real loopback HTTP, an MCP initialize handshake, three curated tools and 11 registered modules.
 - **Frontend React/Vite build:** **not run in this offline packaging environment** because frontend npm dependencies are absent. A previous GitHub Actions run built the corresponding v0.4.0 frontend successfully before failing the now-corrected Debian asset check; this clean source ZIP still requires a fresh CI build.
 - **Debian packager:** Bash syntax PASS; a disposable packaging *fixture* with a test-only JavaScript asset PASS. **No production `.deb` is claimed or included** until a real frontend build and clean Linux installation succeed.
 - **Device/enterprise/model-provider end-to-end tests:** **not verified**. Do not infer service availability from static visuals.
@@ -248,4 +257,4 @@ RoboForge Studio is released under the **MIT License** — Copyright (c) 2026 Ja
 
 ---
 
-<div align="center"><sub>RoboForge Studio v0.4.0 · Graphite / silver / cyan · Local-first, operator-controlled engineering</sub></div>
+<div align="center"><sub>RoboForge Studio v0.4.1 · Graphite / silver / cyan · Local-first, operator-controlled engineering</sub></div>

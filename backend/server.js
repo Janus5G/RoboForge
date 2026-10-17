@@ -15,6 +15,7 @@ const gateway = require('./mcp/gateway');
 const managedGrants = require('./mcp/managed-grants');
 const refract = require('./adapters/refract');
 const janus = require('./adapters/janus');
+const codingAgent = require('./adapters/coding-agent');
 const fs = require('node:fs');
 const path = require('node:path');
 const crypto = require('node:crypto');
@@ -88,6 +89,10 @@ const server=http.createServer(async(req,res)=>{
     if(req.method==='GET' && p==='/api/mcp/status') return reply(res,200,{enabled:gateway.isEnabled(),transport:'streamable-http',endpoint:gateway.isEnabled()?'http://127.0.0.1:'+req.socket.localPort+'/mcp':null,stateless:true,tools:gateway.TOOL_DEFINITIONS.map(x=>x.name),limits:{tools:gateway.TOOL_DEFINITIONS.length,resultBytes:32768},managedMode:managedGrants.isManaged(),managedVerifierReady:managedGrants.verifierReady(),managedExecutionAuthorization:managedGrants.isManaged()?'required for controlled tools':'not enforced (standalone mode)',warning:'Connecting to MCP requires separate ChromaNeural approval; this status is not proof of compatibility.'});
     if(req.method==='GET' && p==='/api/refract/status') return reply(res,200,refract.status());
     if(req.method==='GET' && p==='/api/janus/status') return reply(res,200,janus.status());
+    if(req.method==='GET' && p==='/api/coding-agent/status') return reply(res,200,codingAgent.status());
+    if(req.method==='POST' && p==='/api/coding-agent/review') return reply(res,200,await codingAgent.inspect({...await readJson(req),mode:'review'}));
+    if(req.method==='POST' && p==='/api/coding-agent/preflight') return reply(res,200,await codingAgent.inspect({...await readJson(req),mode:'secure-preflight'}));
+    if(req.method==='POST' && p==='/api/coding-agent/verify') return reply(res,200,await codingAgent.verify(await readJson(req)));
     if(req.method==='POST' && p==='/api/refract/compile') {const b=await readJson(req);if(!b||typeof b.source!=='string')return fail(res,400,'CPL source required');return reply(res,200,await refract.compile(b.source));}
     if(req.method==='GET' && p==='/api/rea/status') return reply(res,200,managedGrants.isManaged()?{enabled:rea.enabled(),externalProbe:false,readiness:'REA CLI probing is disabled in ChromaNeural-managed mode; authorization is required for controlled analysis'}:await rea.status());
     if(req.method==='POST' && p==='/api/rea/analyze') return reply(res,200,await rea.analyze(await readJson(req)));

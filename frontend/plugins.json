@@ -107,6 +107,18 @@
       "capabilities": [
         "runtime-status"
       ]
+    },
+    {
+      "id": "coding-agent",
+      "name": "ChromaPlex Coding Agent",
+      "icon": "⌘",
+      "category": "experimental",
+      "experimental": true,
+      "capabilities": [
+        "source-review",
+        "secure-preflight",
+        "verify-build"
+      ]
     }
   ]
 }
